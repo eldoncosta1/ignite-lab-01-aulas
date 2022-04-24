@@ -5,8 +5,12 @@ import { GraphQLModule } from '@nestjs/graphql';
 import path from 'node:path';
 
 import { DatabaseModule } from '../database/database.module';
-import { TestResolver } from './test.graphql.resolver';
-import { TestController } from './test.prisma.controller';
+import { CustomersService } from '../services/customers.service';
+import { ProductsService } from '../services/products.service';
+import { PurchaseService } from '../services/purchase.service';
+import { CustomersResolver } from './graphql/resolvers/customers.resolver';
+import { ProductsResolver } from './graphql/resolvers/procuts.resolver';
+import { PurchaseResolver } from './graphql/resolvers/purchases.resolver';
 
 @Module({
   // Configuração par ao nest entender process.env
@@ -18,11 +22,17 @@ import { TestController } from './test.prisma.controller';
       autoSchemaFile: path.resolve(process.cwd(), 'src/schema.gql'),
     }),
   ],
-  controllers: [
-    TestController
-  ],
+  controllers: [],
   providers: [
-    TestResolver
+    // Resolvers
+    ProductsResolver,
+    PurchaseResolver,
+    CustomersResolver,
+
+    // Services
+    ProductsService,
+    PurchaseService,
+    CustomersService
   ],
 })
 export class HttpModule { }
